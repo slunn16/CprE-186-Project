@@ -11,6 +11,10 @@ import javafx.geometry.*;
 public class NumLetters {
 	
 	public static void display(String title) {
+		CharSequence entryString;
+		String number;
+		int letters;
+		
 		//Set up stage
 		Stage window = new Stage();
 		window.setTitle(title);

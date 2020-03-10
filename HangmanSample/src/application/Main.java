@@ -12,19 +12,26 @@ import javafx.geometry.*;
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
+		//Set opening hangman window
 		Stage hangman = new Stage();
 		String title = "Hangman";
 		hangman.setTitle(title);
 		
-		Button newGame = new Button("New Game");
+		//New Game button set up
+		Button newGame = new Button("Game");
 		newGame.setMinWidth(300);
-		newGame.setOnAction(e -> NumLetters.display(title));
+		newGame.setOnAction(e -> {
+			NumLetters.display(title);
+			hangman.close();
+			});
 		
+		//Set Scene
 		VBox layout = new VBox();
 		layout.getChildren().add(newGame);
 		layout.setAlignment(Pos.CENTER);
 		Scene scene = new Scene(layout, 400, 600);
 		
+		//Show
 		hangman.setScene(scene);
 		hangman.show();
 	}
