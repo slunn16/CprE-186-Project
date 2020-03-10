@@ -23,7 +23,7 @@ public class Dictionary
 	public static Entry[] assembleDictionary() throws Exception
 	{
 		list = new Entry[NUM_ENTRIES+501];
-		File dictionary = new File("C:\\Users\\tnd\\Downloads\\WordList.txt");
+		File dictionary = new File("C:\\Users\\tnd\\Downloads\\WordList v2.txt");
 		Scanner scan = new Scanner(dictionary);
 		int index = 0;
 		while(scan.hasNextLine())
@@ -58,7 +58,7 @@ public class Dictionary
 	 * 
 	 * @param addition String of what word to add
 	 */
-	public static void addWord(String addition)
+	public static void addWord(String addition)  //CURRENTLY DOES NOT WORK DUE TO STATIC NATURE OF CLASS
 	{
 		if(extraWords<501)
 		{

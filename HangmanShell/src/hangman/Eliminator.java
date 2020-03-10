@@ -52,13 +52,13 @@ public class Eliminator
 		int index2 = 0;
 		for(int i = 0; i<Dictionary.getNumEntries();i++)
 		{
-			index2=0;
 			spot=0;
-			while(guessIndex[index2]!=0&&index2!=0)
+			while(guessIndex[index2]!=0||index2==0)
 			{
 				if(tempDic[i].getWord().indexOf(guess,spot)!=guessIndex[index2])
 				{
 					tempDic[i].changeStatus();
+					break;
 				}
 				else
 				{
@@ -71,5 +71,8 @@ public class Eliminator
 		return tempDic;
 	}
 	
-
+	public void changeDic(Entry[] dicReplace)
+	{
+		tempDic = dicReplace;
+	}
 }
