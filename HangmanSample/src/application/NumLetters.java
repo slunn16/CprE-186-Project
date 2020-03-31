@@ -10,17 +10,17 @@ import javafx.geometry.*;
 
 public class NumLetters {
 	
+	private static CharSequence entryString;
+	private static String word;
+	
 	public static void display(String title) {
-		CharSequence entryString;
-		String number;
-		int letters;
 		
 		//Set up stage
 		Stage window = new Stage();
 		window.setTitle(title);
 		
 		//Create Label
-		Label numLetters = new Label("Enter the number of letters: ");
+		Label numLetters = new Label("Enter the word: ");
 		
 		//Create Textfield
 		TextField entryBox = new TextField();
@@ -30,7 +30,15 @@ public class NumLetters {
 		
 		//Handles the event of the enter button
 		enter.setOnAction(e -> {
-			window.close();
+			entryString = entryBox.getCharacters();
+			word = entryString.toString();
+			if(word.length() > 0) {
+				window.close();
+				GameDisplay.play(title, word);
+			}
+			else {
+				
+			}
 		});
 		
 		HBox layout = new HBox();
