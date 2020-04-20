@@ -37,7 +37,7 @@ public class NumLetters {
 				GameDisplay.play(title, word);
 			}
 			else {
-				
+				notValidDisplay();
 			}
 		});
 		
@@ -47,6 +47,24 @@ public class NumLetters {
 		
 		window.setScene(scene);
 		window.showAndWait();
+	}
+	
+	public static void notValidDisplay() {
+		
+		Stage invalid = new Stage();
+		
+		Label message = new Label("This is not a valid word.");
+		Button accept = new Button("Ok");
+		
+		accept.setOnAction(e -> invalid.close());
+		
+		VBox layout = new VBox();
+		layout.getChildren().addAll(message, accept);
+		Scene scene = new Scene(layout, 200, 50);
+		
+		invalid.setScene(scene);
+		invalid.showAndWait();
+		
 	}
 	
 }
