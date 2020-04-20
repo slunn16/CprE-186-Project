@@ -21,8 +21,8 @@ public class Main extends Application {
 		Button newGame = new Button("Game");
 		newGame.setMinWidth(300);
 		newGame.setOnAction(e -> {
-			NumLetters.display(title);
 			hangman.close();
+			NumLetters.display(title);
 			});
 		
 		//Set Scene
