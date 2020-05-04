@@ -1,5 +1,6 @@
 package application;
 
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -56,7 +57,8 @@ public class GameDisplay {
 		legR.relocate(200,700);
 		Label sign = new Label(String.valueOf(Guess));
 		Label wordProgress = new Label(String.valueOf(wordGuess));
-		game.setMaximized(true);
+		game.setMaxWidth(2000);
+		game.setMaxHeight(750);
 		button.setOnAction(e->{
 			//c[0] = getNextLetter(word);
 			AlertGuess.display('x');

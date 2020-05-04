@@ -1,14 +1,19 @@
 package application;
 
+import java.io.FileNotFoundException;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-import javafx.event.*;
-import javafx.scene.layout.*;
-import javafx.scene.control.*;
-import javafx.geometry.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
+
 
 public class NumLetters {
 	
@@ -43,13 +48,23 @@ public class NumLetters {
 		enter.setOnAction(e -> {
 			entryString = entryBox.getCharacters();
 			word = entryString.toString();
-			if(word.length() > 0) {
-				window.close();
-				GameDisplay.play(title, word);
+			Dictionary dictionary = new Dictionary();
+			try {
+				dictionary.assembleDictionary();
+
+				if(dictionary.inDic(word)) {
+					window.close();
+					GameDisplay.play(title, word);
+				}
+				else {
+					notValidDisplay();
+				}
+				
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				System.out.println("Error");
 			}
-			else {
-				notValidDisplay();
-			}
+			
 		});
 		
 		HBox layout = new HBox();
