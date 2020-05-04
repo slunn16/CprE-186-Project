@@ -7,12 +7,19 @@ import javafx.event.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.geometry.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 public class NumLetters {
 	
 	private static CharSequence entryString;
 	private static String word;
 	
+	/**
+	 * Sets up what is needed for the main game display
+	 * 
+	 * @param title Title to put int the window for the game
+	 */
 	public static void display(String title) {
 		
 		//Set up stage
@@ -21,12 +28,16 @@ public class NumLetters {
 		
 		//Create Label
 		Label numLetters = new Label("Enter the word: ");
+		numLetters.setFont(new Font("Arial", 16));
+		numLetters.setTextFill(Color.DARKRED);
 		
 		//Create Textfield
 		TextField entryBox = new TextField();
 		
 		//Create enter button
 		Button enter = new Button("Enter");
+		enter.setStyle("-fx-background-color: grey;");
+		enter.setTextFill(Color.DARKBLUE);
 		
 		//Handles the event of the enter button
 		enter.setOnAction(e -> {
@@ -42,6 +53,7 @@ public class NumLetters {
 		});
 		
 		HBox layout = new HBox();
+		layout.setStyle("-fx-background-color: black;");
 		layout.getChildren().addAll(numLetters,entryBox,enter);
 		Scene scene = new Scene(layout, 350, 50);
 		
@@ -49,6 +61,9 @@ public class NumLetters {
 		window.showAndWait();
 	}
 	
+	/**
+	 * Sets up new window when the word is not valid.
+	 */
 	public static void notValidDisplay() {
 		
 		Stage invalid = new Stage();
