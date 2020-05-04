@@ -11,6 +11,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 import javafx.scene.control.*;
 import javafx.geometry.*;
+import java.util.*;
 
 public class GameDisplay {
 
@@ -24,7 +25,12 @@ public class GameDisplay {
 		for(int i =0;i < GuessedLetters.length();i++) {
 			Guess[i] = GuessedLetters.charAt(i);
 		}
-		char c = 'x';
+		char[] wordGuess = new char[word.length()*2];
+		for(int i = 0; i < word.length()*2; i+=2) {
+			wordGuess[i] = '_';
+			wordGuess[i+1] = ' ';
+		}
+		char[] c = {'x'};
 		Stage game = new Stage();
 		game.setTitle(title);
 		Pane layout = new Pane();
@@ -49,70 +55,80 @@ public class GameDisplay {
 		legL.relocate(200,700);
 		legR.relocate(200,700);
 		Label sign = new Label(String.valueOf(Guess));
+		Label wordProgress = new Label(String.valueOf(wordGuess));
+		game.setMaximized(true);
 		button.setOnAction(e->{
-			//c = getNextLetter();
+			//c[0] = getNextLetter(word);
 			AlertGuess.display('x');
 			boolean loop = false;
-			if(word.indexOf(c) == -1 && lives[0] == 6 && !loop) {
+			if(word.indexOf(c[0]) != -1 && lives[0] != 0) {
+				ArrayList<Integer> x = findAllChar(word,c[0]);
+				for(int i =0; i < x.size(); i++) {
+					 wordGuess[x.get(i)*2] = c[0];
+				}
+				wordProgress.setText(String.valueOf(wordGuess));
+			}
+			if(word.indexOf(c[0]) == -1 && lives[0] == 6 && !loop) {
 				r.relocate(500,250);
 				lives[0] = lives[0] -1;
 				loop = true;
-				Guess[letterPosition[0]] = c;
+				Guess[letterPosition[0]] = c[0];
 				letterPosition[0] = letterPosition[0] +1;
 				Guess[letterPosition[0]] = ',';
 				letterPosition[0] = letterPosition[0] +1;
 				sign.setText(String.valueOf(Guess));
 			}
-			if(word.indexOf(c) ==-1 && lives[0] == 5 && !loop) {
+			if(word.indexOf(c[0]) ==-1 && lives[0] == 5 && !loop) {
 				torso.relocate(600, 400);
 				lives[0] = lives[0] -1;
 				loop = true;
-				Guess[letterPosition[0]] = c;
+				Guess[letterPosition[0]] = c[0];
 				letterPosition[0] = letterPosition[0] +1;
 				Guess[letterPosition[0]] = ',';
 				letterPosition[0] = letterPosition[0] +1;
 				sign.setText(String.valueOf(Guess));
 			}
-			if(word.indexOf(c) ==-1 && lives[0] == 4 && !loop) {
+			if(word.indexOf(c[0]) ==-1 && lives[0] == 4 && !loop) {
 				armR.relocate(610, 540);
 				lives[0] = lives[0] -1;
 				loop = true;
-				Guess[letterPosition[0]] = c;
+				Guess[letterPosition[0]] = c[0];
 				letterPosition[0] = letterPosition[0] +1;
 				Guess[letterPosition[0]] = ',';
 				letterPosition[0] = letterPosition[0] +1;
 				sign.setText(String.valueOf(Guess));
 			}
-			if(word.indexOf(c) ==-1 && lives[0] == 3 && !loop) {
+			if(word.indexOf(c[0]) ==-1 && lives[0] == 3 && !loop) {
 				armL.relocate(500, 540);
 				lives[0] = lives[0] -1;
 				loop = true;
-				Guess[letterPosition[0]] = c;
+				Guess[letterPosition[0]] = c[0];
 				letterPosition[0] = letterPosition[0] +1;
 				Guess[letterPosition[0]] = ',';
 				letterPosition[0] = letterPosition[0] +1;
 				sign.setText(String.valueOf(Guess));
 			}
-			if(word.indexOf(c) ==-1 && lives[0] == 2 && !loop) {
+			if(word.indexOf(c[0]) ==-1 && lives[0] == 2 && !loop) {
 				legL.relocate(600, 700);
 				lives[0] = lives[0] -1;
 				loop = true;
-				Guess[letterPosition[0]] = c;
+				Guess[letterPosition[0]] = c[0];
 				letterPosition[0] = letterPosition[0] +1;
 				Guess[letterPosition[0]] = ',';
 				letterPosition[0] = letterPosition[0] +1;
 				sign.setText(String.valueOf(Guess));
 			}
-			if(word.indexOf(c) ==-1 && lives[0] == 1 && !loop) {
+			if(word.indexOf(c[0]) ==-1 && lives[0] == 1 && !loop) {
 				legR.relocate(600, 700);
 				lives[0] = lives[0] -1;
 				loop = true;
-				Guess[letterPosition[0]] = c;
+				Guess[letterPosition[0]] = c[0];
 				letterPosition[0] = letterPosition[0] +1;
 				Guess[letterPosition[0]] = ',';
 				letterPosition[0] = letterPosition[0] +1;
 				sign.setText(String.valueOf(Guess));
 			}
+			c[0] ='l';
 		});
 		layout.setStyle("-fx-background-color: black;");
 		layout.setPrefSize(1500, 1000);
@@ -120,6 +136,11 @@ public class GameDisplay {
 		sign.setScaleX(5.0);
 		sign.setScaleY(5.0);
 		sign.relocate(1200,100);
+		sign.setTextFill(Color.ANTIQUEWHITE);
+		wordProgress.setScaleX(10.0);
+		wordProgress.setScaleY(10.0);
+		wordProgress.relocate(600, 1100);
+		wordProgress.setTextFill(Color.ANTIQUEWHITE);
 		Label LettersAvailable = new Label("empty");
 		LettersAvailable.setScaleX(5.0);
 		LettersAvailable.setScaleY(5.0);
@@ -132,10 +153,20 @@ public class GameDisplay {
 		connector.relocate(600, 150); 
 		Rectangle last = new Rectangle(10,100,Color.DARKRED);
 		last.relocate(600, 150);
-		layout.getChildren().addAll(base, tallPiece, last,sign,connector,button,r,torso,armR,armL,legL,legR); //,torso,legL,legR,armR,armLbase,Height,connector,last;
+		layout.getChildren().addAll(base, tallPiece, last,sign,connector,button,r,torso,armR,armL,legL,legR, wordProgress); //,torso,legL,legR,armR,armLbase,Height,connector,last;
 		Scene scene = new Scene(layout);
 		game.setScene(scene);
 		game.show();
+	}
+	public static ArrayList<Integer> findAllChar(String word, char c) {
+		ArrayList<Integer> num = new ArrayList<Integer>();
+		char[] letters = new char[word.length()];
+		for(int i = 0; i < letters.length; i++) {
+			if(word.charAt(i) == c) {
+				num.add(i);
+			}
+		}
+		return num;
 	}
 
 }
